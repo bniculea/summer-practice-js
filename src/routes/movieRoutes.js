@@ -31,6 +31,18 @@ router.get('/', async (req, res) => {
    
   })
   
+  router.delete('/:id', async (req, res) => {
+    try {
+      const id = req.params.id
+      await MovieModel.findByIdAndDelete(id)
+      res.status(204).send()
+    } catch (err) {
+      if (err instanceof CastError){
+        res.status(204).send()
+      }
+    }
+  })
+
   router.patch('/', (req, res)=> {
       res.status(405).send()
   })
