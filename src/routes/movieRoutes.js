@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const MovieModel = require('../models/movie')
 const CastError = require('mongoose').CastError
+
 router.get('/', async (req, res) => {
     const movies = await MovieModel.find()
     res.status(200).send(movies)
