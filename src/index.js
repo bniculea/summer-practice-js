@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const movieRoutes = require('./routes/userRoutes')
+const movieRoutes = require('./routes/movieRoutes')
 
 const dbName = 'moviesDB'
 const uri = `mongodb://localhost:27017/${dbName}`;
@@ -8,7 +8,6 @@ const uri = `mongodb://localhost:27017/${dbName}`;
 const port = 9000
 const app = express()
 
-// app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 app.use('/movies', movieRoutes)
 
