@@ -1,17 +1,20 @@
-const express = require('express')
+import express from 'express'
 const router = express.Router()
-const MovieModel = require('../models/movie')
-const CastError = require('mongoose').CastError
-
+import MovieModel from '../models/movie'
+import mongoose from 'mongoose'
 router.get('/', async (req, res) => {
     const movies = await MovieModel.find()
     res.status(200).send(movies)
   })
   
-  router.post('/', async (req, res) => {
+  router.post('/', async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+      try {
       const movie = new MovieModel(req.body)
-      await movie.save()
-      res.status(201)
+      const result = await movie.save()
+      res.status(201).send(result)
+      } catch(err){
+        next(err)
+      }
   })
 
   router.get('/:id', async (req, res) => {
@@ -25,7 +28,7 @@ router.get('/', async (req, res) => {
         res.status(200).send(movie)
       }
     } catch (err){
-      if (err instanceof CastError){
+      if (err instanceof mongoose.Error.CastError){
         res.status(404).send()
       }
     }
@@ -38,7 +41,7 @@ router.get('/', async (req, res) => {
       await MovieModel.findByIdAndDelete(id)
       res.status(204).send()
     } catch (err) {
-      if (err instanceof CastError){
+      if (err instanceof mongoose.Error.CastError){
         res.status(204).send()
       }
     }
@@ -48,4 +51,4 @@ router.get('/', async (req, res) => {
       res.status(405).send()
   })
 
-module.exports = router
+  export default router

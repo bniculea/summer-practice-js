@@ -1,6 +1,6 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const movieRoutes = require('./routes/movieRoutes')
+import express from 'express'
+import mongoose from 'mongoose'
+import movieRoutes from './routes/movieRoutes'
 
 const dbName = 'moviesDB'
 const uri = `mongodb://localhost:27017/${dbName}`;
